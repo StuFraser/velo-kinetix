@@ -183,14 +183,6 @@ A confident "we can't tell" builds more trust than a hedged answer that turns ou
 
 ---
 
-## Project Status
-
-Early development. Architecture validated, CV pipeline in progress.
-
-See `VeloKinetix-Kanban.xlsx` for full backlog.
-
----
-
 ## Scope
 
 VeloKinetix is not "replace a bike fitter." It's "before you ride 1000km on a setup that's wrecking your knees, spend 10 minutes finding out if you're even close."
