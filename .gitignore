@@ -1,0 +1,16 @@
+/media
+/notes
+
+.env
+
+# .NET
+bin/
+obj/
+
+# secrets
+appsettings.Development.json
+
+# Node
+node_modules/
+dist/
+.vite/
