@@ -38,7 +38,7 @@ export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
       <div className="photo-slot__meta">
         <span className="photo-slot__label">{slot.label}</span>
         <span className={`photo-slot__badge photo-slot__badge--${slot.required}`}>
-          {slot.required === 'recommended' ? 'Recommended' : 'Optional'}
+          {slot.required === 'required' ? 'Required' : slot.required === 'recommended' ? 'Recommended' : 'Optional'}
         </span>
       </div>
       <span className="photo-slot__hint">{slot.hint}</span>

@@ -36,8 +36,6 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
   );
   const [formError, setFormError] = useState<string | null>(null);
 
-  const photoCount = Object.keys(photos).length;
-
   async function handleSelect(photoType: PhotoType, file: File) {
     const base64 = await fileToBase64(file);
     const previewUrl = URL.createObjectURL(file);
@@ -59,8 +57,8 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
       setFormError('Choose a riding style before analysing.');
       return;
     }
-    if (photoCount === 0) {
-      setFormError('Add at least one photo before analysing.');
+    if (!photos.profile_drive) {
+      setFormError('Add the drive-side profile photo before analysing — it’s required.');
       return;
     }
     setFormError(null);

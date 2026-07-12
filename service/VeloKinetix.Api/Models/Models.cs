@@ -12,8 +12,10 @@ public static class PhotoTypes
 {
     public static readonly string[] Allowed =
     [
-        "profile_drive", "front_on", "bike_static", "profile_nondrive"
+        "profile_drive", "front_on", "bike_static"
     ];
+
+    public const string Required = "profile_drive";
 }
 
 public static class MimeTypes

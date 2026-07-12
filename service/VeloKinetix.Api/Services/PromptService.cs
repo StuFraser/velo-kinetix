@@ -33,6 +33,9 @@ public class PromptService : IPromptService
         sb.AppendLine("Guidance:");
         sb.AppendLine("- These are real-world photos: expect imperfect angles, motion blur, outdoor lighting, and background noise.");
         sb.AppendLine("  Where a photo's quality or angle limits what you can assess, say so explicitly in analysisLimitations rather than guessing.");
+        sb.AppendLine("- Fewer photos means a narrower basis for judgement: if only the drive-side profile photo is provided (no front-on or bike-only shot), " +
+                      "say so in analysisLimitations, widen your hedging accordingly across all sections, and do not make claims that would need a front-on " +
+                      "or bike-only view to support (e.g. saddle fore-aft/rotation symmetry, handlebar width, frame geometry not visible from a side profile).");
         sb.AppendLine("- A limitation must not sit only in analysisLimitations while the adjustment it affects is stated as settled fact elsewhere: " +
                       "if something reduces certainty about a specific adjustment (camera angle, obscuring clothing, a static rather than dynamic pose), " +
                       "that adjustment's own impact rating and wording must reflect it — lower the impact and use qualified language " +
@@ -65,7 +68,6 @@ public class PromptService : IPromptService
         "profile_drive" => "rider profile, drive (chain) side, pedals near 6/12 o'clock",
         "front_on" => "rider facing the camera",
         "bike_static" => "bike only, roughly 45 degree angle, no rider",
-        "profile_nondrive" => "rider profile, non-drive side",
         _ => "unrecognised photo type"
     };
 }

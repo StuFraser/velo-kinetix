@@ -11,10 +11,9 @@ export const RIDING_STYLES = [
 export type RidingStyle = (typeof RIDING_STYLES)[number];
 
 export const PHOTO_SLOTS = [
-  { photoType: 'profile_drive', label: 'Drive-side profile', hint: 'Pedals near 6/12 o’clock', required: 'recommended' },
+  { photoType: 'profile_drive', label: 'Drive-side profile', hint: 'Pedals near 6/12 o’clock', required: 'required' },
   { photoType: 'front_on', label: 'Front on', hint: 'Facing the camera', required: 'recommended' },
   { photoType: 'bike_static', label: 'Bike only', hint: '~45° angle, no rider', required: 'recommended' },
-  { photoType: 'profile_nondrive', label: 'Non-drive profile', hint: 'Optional extra angle', required: 'optional' },
 ] as const;
 
 export type PhotoType = (typeof PHOTO_SLOTS)[number]['photoType'];

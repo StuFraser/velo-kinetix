@@ -9,7 +9,7 @@ public interface IValidationService
 
 public class ValidationService : IValidationService
 {
-    private const int MaxPhotos = 4;
+    private const int MaxPhotos = 3;
     private const int MaxPhotoBytes = 8 * 1024 * 1024;
     private const int MaxRiderNotesLength = 2000;
 
@@ -33,7 +33,7 @@ public class ValidationService : IValidationService
 
         if (request.Photos is null || request.Photos.Count == 0)
         {
-            errors.Add("At least one photo is required.");
+            errors.Add($"A '{PhotoTypes.Required}' photo is required.");
         }
         else
         {
@@ -46,6 +46,11 @@ public class ValidationService : IValidationService
             for (var i = 0; i < request.Photos.Count; i++)
             {
                 ValidatePhoto(request.Photos[i], i, errors, seenTypes);
+            }
+
+            if (!seenTypes.Contains(PhotoTypes.Required))
+            {
+                errors.Add($"A '{PhotoTypes.Required}' photo is required.");
             }
         }
 

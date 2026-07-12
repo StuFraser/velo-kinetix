@@ -83,8 +83,8 @@ Request body:
 ```
 
 `ridingStyle` is one of: `Commuter`, `Adventure/Gravel`, `Cross Country`, `Trail`, `Enduro`,
-`Downhill`, `Road`. `photoType` is one of: `profile_drive`, `front_on`, `bike_static`,
-`profile_nondrive` (all recommended, none hard-required — at least one photo is enough to submit).
+`Downhill`, `Road`. `photoType` is one of: `profile_drive`, `front_on`, `bike_static`.
+`profile_drive` is required; `front_on` and `bike_static` are recommended but optional.
 
 Success response:
 

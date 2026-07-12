@@ -168,6 +168,10 @@
   color: var(--text-muted);
 }
 
+.photo-slot__badge--required {
+  color: var(--red);
+}
+
 .photo-slot__hint {
   font-size: 12px;
   color: var(--text-muted);
