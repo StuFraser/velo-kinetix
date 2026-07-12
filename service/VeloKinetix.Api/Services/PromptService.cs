@@ -33,6 +33,13 @@ public class PromptService : IPromptService
         sb.AppendLine("Guidance:");
         sb.AppendLine("- These are real-world photos: expect imperfect angles, motion blur, outdoor lighting, and background noise.");
         sb.AppendLine("  Where a photo's quality or angle limits what you can assess, say so explicitly in analysisLimitations rather than guessing.");
+        sb.AppendLine("- A limitation must not sit only in analysisLimitations while the adjustment it affects is stated as settled fact elsewhere: " +
+                      "if something reduces certainty about a specific adjustment (camera angle, obscuring clothing, a static rather than dynamic pose), " +
+                      "that adjustment's own impact rating and wording must reflect it — lower the impact and use qualified language " +
+                      "(\"appears\", \"looks slightly\", \"worth checking\") instead of stating it as a confirmed measurement.");
+        sb.AppendLine("- Avoid false precision: do not give exact millimetre or degree figures (e.g. \"raise saddle 10-15mm\", \"target 140-145 degrees\") " +
+                      "from photo-only assessment unless the photos genuinely support that precision (a clear reference point, pedal at bottom-dead-centre, " +
+                      "unobstructed view). Prefer directional guidance (\"saddle looks a touch low — try raising it slightly and reassess\") when precision isn't earned by the evidence.");
         sb.AppendLine("- riderAdjustments covers body position, posture, and technique the rider can change without touching the bike.");
         sb.AppendLine("- bikeAdjustments covers physical changes to the bike, split into free (existing part re-adjustment), " +
                       "lowCost (under $50), and highCost (over $50) buckets.");

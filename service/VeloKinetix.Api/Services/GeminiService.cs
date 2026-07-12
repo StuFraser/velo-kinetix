@@ -106,7 +106,7 @@ public class GeminiService(
             throw new GeminiException("Gemini API error: no API key configured on the server.");
         }
 
-        var model = configuration["Gemini:Model"] ?? "gemini-1.5-flash";
+        var model = configuration["Gemini:Model"] ?? "gemini-flash-latest";
         var prompt = promptService.BuildPrompt(request.RidingStyle, request.RiderNotes, request.Photos);
 
         var parts = new List<GeminiPart> { new() { Text = prompt } };
