@@ -44,7 +44,9 @@ function App() {
           <UploadScreen onSubmit={handleSubmit} initialError={error} initialRequest={lastRequest} />
         )}
         {screen === 'loading' && <LoadingScreen />}
-        {screen === 'results' && result && <ResultsScreen result={result} onReset={handleReset} />}
+        {screen === 'results' && result && (
+          <ResultsScreen result={result} request={lastRequest} onReset={handleReset} />
+        )}
       </main>
     </div>
   );

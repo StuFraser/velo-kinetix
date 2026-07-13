@@ -28,6 +28,7 @@ export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
         ref={inputRef}
         type="file"
         accept="image/jpeg,image/png,image/webp"
+        capture="environment"
         className="photo-slot__input"
         onChange={(e) => {
           const file = e.target.files?.[0];

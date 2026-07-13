@@ -1,7 +1,9 @@
-import type { AnalyseResponse, Adjustment } from '../api';
+import { useState } from 'react';
+import type { AnalyseRequest, AnalyseResponse, Adjustment } from '../api';
 
 interface Props {
   result: AnalyseResponse;
+  request: AnalyseRequest | null;
   onReset: () => void;
 }
 
@@ -36,7 +38,24 @@ function CostGroup({ title, dot, items }: { title: string; dot: string; items: A
   );
 }
 
-export function ResultsScreen({ result, onReset }: Props) {
+export function ResultsScreen({ result, request, onReset }: Props) {
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
+
+  async function handleDownloadPdf() {
+    if (!request) return;
+    setPdfError(null);
+    setIsGeneratingPdf(true);
+    try {
+      const { downloadFitReportPdf } = await import('./PdfReport');
+      await downloadFitReportPdf(request, result);
+    } catch {
+      setPdfError('Could not generate the PDF. Please try again.');
+    } finally {
+      setIsGeneratingPdf(false);
+    }
+  }
+
   return (
     <div className="results-screen">
       <h1>Your fit analysis</h1>
@@ -70,6 +89,19 @@ export function ResultsScreen({ result, onReset }: Props) {
       )}
 
       <p className="disclaimer">{result.disclaimer}</p>
+
+      {pdfError && <p className="results-screen__error">{pdfError}</p>}
+
+      {request && (
+        <button
+          type="button"
+          className="download-pdf-button"
+          onClick={handleDownloadPdf}
+          disabled={isGeneratingPdf}
+        >
+          {isGeneratingPdf ? 'Preparing PDF…' : 'Download PDF report'}
+        </button>
+      )}
 
       <button type="button" className="analyse-button" onClick={onReset}>
         Analyse another fit
