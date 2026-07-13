@@ -52,6 +52,18 @@ Listens on `http://localhost:5030`. Needs a Gemini API key — copy your key int
 
 Free key: [aistudio.google.com](https://aistudio.google.com). This file is git-ignored.
 
+By default, `dotnet run` in Development uses a `MockGeminiService` that returns canned data instead
+of calling the real Gemini API — useful for UI/flow testing without burning API quota (a real key is
+still needed for `/api/fitanalysis/analyse` to run at all in other environments, but not for local
+mock-mode testing). To exercise the real Gemini API locally, set `Gemini__UseMock=false`:
+
+```
+Gemini__UseMock=false dotnet run --launch-profile http
+```
+
+or add `"UseMock": false` under `"Gemini"` in your local `appsettings.Development.json`. Non-development
+environments always use the real API regardless of this setting.
+
 ### Frontend
 
 ```

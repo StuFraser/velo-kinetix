@@ -13,7 +13,19 @@ builder.Services.AddHttpClient("Gemini", client =>
 
 builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddScoped<IPromptService, PromptService>();
-builder.Services.AddScoped<IGeminiService, GeminiService>();
+
+// Development defaults to a mock Gemini response to avoid burning real API quota while testing.
+// Set Gemini:UseMock=false (env var: Gemini__UseMock=false) to hit the real API locally.
+var useMockGemini = builder.Environment.IsDevelopment()
+    && builder.Configuration.GetValue("Gemini:UseMock", true);
+if (useMockGemini)
+{
+    builder.Services.AddScoped<IGeminiService, MockGeminiService>();
+}
+else
+{
+    builder.Services.AddScoped<IGeminiService, GeminiService>();
+}
 
 const string CorsPolicyName = "VeloKinetixCors";
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
