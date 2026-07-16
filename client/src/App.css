@@ -419,3 +419,54 @@
   opacity: 0.6;
   cursor: default;
 }
+
+/* Feedback page */
+.feedback-page h1 {
+  font-size: 32px;
+  text-align: center;
+}
+
+.feedback-page__intro {
+  text-align: center;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+
+.feedback-page__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.feedback-page__return-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.feedback-page__return-fill {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 21, 10, 0.18);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation-name: feedback-return-fill;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.feedback-page__return-label {
+  position: relative;
+}
+
+@keyframes feedback-return-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

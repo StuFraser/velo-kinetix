@@ -73,3 +73,23 @@ public class GeminiAnalysisResult
     public List<string> AnalysisLimitations { get; set; } = [];
     public string Disclaimer { get; set; } = "";
 }
+
+public static class FeedbackCategories
+{
+    public static readonly string[] Allowed = ["Ideas", "Feedback", "Q&A"];
+}
+
+public class FeedbackRequest
+{
+    public string Category { get; set; } = "";
+    public string Message { get; set; } = "";
+
+    /// <summary>Honeypot field — real users never see or fill this in. Non-empty means a bot submitted the form.</summary>
+    public string? Website { get; set; }
+}
+
+public class FeedbackResponse
+{
+    public bool Success { get; set; } = true;
+    public string DiscussionUrl { get; set; } = "";
+}

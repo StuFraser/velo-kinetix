@@ -20,6 +20,14 @@ export function Header() {
           Home
         </NavLink>
         <NavLink
+          to="/feedback"
+          className={({ isActive }) =>
+            isActive ? 'app-header__nav-link app-header__nav-link--active' : 'app-header__nav-link'
+          }
+        >
+          Feedback
+        </NavLink>
+        <NavLink
           to="/about"
           className={({ isActive }) =>
             isActive ? 'app-header__nav-link app-header__nav-link--active' : 'app-header__nav-link'

@@ -86,6 +86,42 @@ export async function analyseFit(request: AnalyseRequest): Promise<AnalyseRespon
   return response.json();
 }
 
+export const FEEDBACK_CATEGORIES = ['Ideas', 'Feedback', 'Q&A'] as const;
+
+export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];
+
+export interface FeedbackRequest {
+  category: FeedbackCategory;
+  message: string;
+  website?: string;
+}
+
+export interface FeedbackResponse {
+  success: boolean;
+  discussionUrl: string;
+}
+
+export async function submitFeedback(request: FeedbackRequest): Promise<FeedbackResponse> {
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}/api/feedback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+  } catch {
+    throw new ApiError('Could not reach the feedback service. Check your connection and try again.', 0);
+  }
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const message = body?.errors?.join(' ') ?? body?.error ?? `Request failed with status ${response.status}.`;
+    throw new ApiError(message, response.status);
+  }
+
+  return response.json();
+}
+
 export function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
