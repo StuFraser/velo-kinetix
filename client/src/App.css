@@ -470,3 +470,59 @@
     transform: scaleX(1);
   }
 }
+
+/* About page */
+.about-page h1 {
+  font-size: 32px;
+  text-align: center;
+}
+
+.about-page__intro {
+  text-align: center;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+
+.about-page__section {
+  margin-bottom: 32px;
+}
+
+.about-page__section h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.about-page__section p {
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.about-page__section p:last-child {
+  margin-bottom: 0;
+}
+
+.about-page__photo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-page__photo-list li {
+  color: var(--text-muted);
+}
+
+.about-page__photo-list strong {
+  color: var(--text);
+}
+
+.about-page__disclaimer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  color: var(--text-muted);
+}

@@ -25,6 +25,9 @@ builder.Services.AddScoped<IFeedbackValidationService, FeedbackValidationService
 // Set Gemini:UseMock=false (env var: Gemini__UseMock=false) to hit the real API locally.
 var useMockGemini = builder.Environment.IsDevelopment()
     && builder.Configuration.GetValue("Gemini:UseMock", true);
+
+// var useMockGemini = false;
+
 if (useMockGemini)
 {
     builder.Services.AddScoped<IGeminiService, MockGeminiService>();
