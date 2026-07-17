@@ -17,6 +17,15 @@ public class ValidationService : IValidationService
     {
         var errors = new List<string>();
 
+        if (string.IsNullOrWhiteSpace(request.Discipline))
+        {
+            errors.Add("discipline is required.");
+        }
+        else if (!Disciplines.Allowed.Contains(request.Discipline))
+        {
+            errors.Add($"discipline must be one of: {string.Join(", ", Disciplines.Allowed)}.");
+        }
+
         if (string.IsNullOrWhiteSpace(request.RidingStyle))
         {
             errors.Add("ridingStyle is required.");

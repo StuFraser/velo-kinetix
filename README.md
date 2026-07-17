@@ -1,6 +1,6 @@
 # VeloKinetix
 
-AI-powered MTB bike fit analysis. Upload a few rider/bike photos, pick your riding style, and get
+AI-powered MTB bike fit analysis. Upload a few rider/bike photos, pick your discipline and riding style, and get
 structured fit recommendations — rider position tweaks and bike adjustments, split by cost — via
 Google Gemini vision.
 
@@ -86,7 +86,8 @@ Request body:
 
 ```json
 {
-  "ridingStyle": "Trail",
+  "discipline": "Trail",
+  "ridingStyle": "Competitive",
   "riderNotes": "Lower back pain on long rides, right knee tracks inward",
   "photos": [
     { "photoType": "profile_drive", "base64Data": "<base64, no data URI prefix>", "mimeType": "image/jpeg" }
@@ -94,8 +95,9 @@ Request body:
 }
 ```
 
-`ridingStyle` is one of: `Commuter`, `Adventure/Gravel`, `Cross Country`, `Trail`, `Enduro`,
-`Downhill`, `Road`. `photoType` is one of: `profile_drive`, `front_on`, `bike_static`.
+`discipline` is one of: `Commuter`, `Adventure/Gravel`, `Cross Country`, `Trail`, `Enduro`,
+`Downhill`, `Road`. `ridingStyle` is one of: `Casual`, `Enthusiast`, `Competitive`.
+`photoType` is one of: `profile_drive`, `front_on`, `bike_static`.
 `profile_drive` is required; `front_on` and `bike_static` are recommended but optional.
 
 Success response:
@@ -103,7 +105,8 @@ Success response:
 ```json
 {
   "success": true,
-  "ridingStyle": "Trail",
+  "discipline": "Trail",
+  "ridingStyle": "Competitive",
   "riderAdjustments": [{ "title": "...", "detail": "...", "impact": "High|Medium|Low", "zone": "..." }],
   "bikeAdjustments": { "free": [], "lowCost": [], "highCost": [] },
   "analysisLimitations": ["..."],

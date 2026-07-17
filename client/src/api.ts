@@ -1,4 +1,4 @@
-export const RIDING_STYLES = [
+export const DISCIPLINES = [
   'Commuter',
   'Adventure/Gravel',
   'Cross Country',
@@ -7,6 +7,10 @@ export const RIDING_STYLES = [
   'Downhill',
   'Road',
 ] as const;
+
+export type Discipline = (typeof DISCIPLINES)[number];
+
+export const RIDING_STYLES = ['Casual', 'Enthusiast', 'Competitive'] as const;
 
 export type RidingStyle = (typeof RIDING_STYLES)[number];
 
@@ -25,6 +29,7 @@ export interface PhotoUpload {
 }
 
 export interface AnalyseRequest {
+  discipline: Discipline;
   ridingStyle: RidingStyle;
   riderNotes: string;
   photos: PhotoUpload[];
@@ -47,6 +52,7 @@ export interface BikeAdjustments {
 
 export interface AnalyseResponse {
   success: boolean;
+  discipline: string;
   ridingStyle: string;
   riderAdjustments: Adjustment[];
   bikeAdjustments: BikeAdjustments;

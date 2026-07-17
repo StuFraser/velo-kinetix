@@ -21,7 +21,7 @@ export function AboutPage() {
       <section className="about-page__section">
         <h2>How it works</h2>
         <p>
-          Pick your riding style, upload a few photos of you and your bike, and optionally add notes on any
+          Pick your discipline and riding style, upload a few photos of you and your bike, and optionally add notes on any
           pain points, injuries, or adaptive needs. VeloKinetix analyses the photos and returns structured
           fit recommendations — rider position and technique adjustments, plus bike adjustments split by
           cost (free, under $50, or higher).

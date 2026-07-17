@@ -127,6 +127,7 @@ export interface ResizedPhoto {
 }
 
 interface ReportDocumentProps {
+  discipline: string;
   ridingStyle: string;
   riderNotes: string;
   photos: ResizedPhoto[];
@@ -170,7 +171,7 @@ function CostGroup({ title, items }: { title: string; items: Adjustment[] }) {
   );
 }
 
-export function ReportDocument({ ridingStyle, riderNotes, photos, result, generatedDate }: ReportDocumentProps) {
+export function ReportDocument({ discipline, ridingStyle, riderNotes, photos, result, generatedDate }: ReportDocumentProps) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -178,7 +179,7 @@ export function ReportDocument({ ridingStyle, riderNotes, photos, result, genera
         <Text style={styles.adjustmentHead}>VeloKinentix</Text>
         <Text style={styles.title}>Fit Analysis Report</Text>
         <Text style={styles.subtitle}>
-          Riding style: {ridingStyle} · Generated {generatedDate}
+          Discipline: {discipline} · Riding style: {ridingStyle} · Generated {generatedDate}
         </Text>
 
         {riderNotes.trim() && (
@@ -231,13 +232,16 @@ export function ReportDocument({ ridingStyle, riderNotes, photos, result, genera
   );
 }
 
-function buildFilename(ridingStyle: string): string {
-  const slug = ridingStyle
+function slugify(value: string): string {
+  return value
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
+}
+
+function buildFilename(discipline: string, ridingStyle: string): string {
   const date = new Date().toISOString().slice(0, 10);
-  return `velokinetix-fit-report-${slug}-${date}.pdf`;
+  return `velokinetix-fit-report-${slugify(discipline)}-${slugify(ridingStyle)}-${date}.pdf`;
 }
 
 export async function downloadFitReportPdf(request: AnalyseRequest, result: AnalyseResponse): Promise<void> {
@@ -250,6 +254,7 @@ export async function downloadFitReportPdf(request: AnalyseRequest, result: Anal
 
   const blob = await pdf(
     <ReportDocument
+      discipline={result.discipline}
       ridingStyle={result.ridingStyle}
       riderNotes={request.riderNotes}
       photos={photos}
@@ -261,7 +266,7 @@ export async function downloadFitReportPdf(request: AnalyseRequest, result: Anal
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = buildFilename(result.ridingStyle);
+  link.download = buildFilename(result.discipline, result.ridingStyle);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

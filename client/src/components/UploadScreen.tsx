@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { PHOTO_SLOTS, RIDING_STYLES, fileToBase64 } from '../api';
-import type { AnalyseRequest, PhotoType, RidingStyle } from '../api';
+import { DISCIPLINES, PHOTO_SLOTS, RIDING_STYLES, fileToBase64 } from '../api';
+import type { AnalyseRequest, Discipline, PhotoType, RidingStyle } from '../api';
 import { PhotoSlot } from './PhotoSlot';
 
 interface PhotoState {
@@ -29,6 +29,7 @@ function restorePhotos(initialRequest: AnalyseRequest | null): Partial<Record<Ph
 }
 
 export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) {
+  const [discipline, setDiscipline] = useState<Discipline | ''>(initialRequest?.discipline ?? '');
   const [ridingStyle, setRidingStyle] = useState<RidingStyle | ''>(initialRequest?.ridingStyle ?? '');
   const [riderNotes, setRiderNotes] = useState(initialRequest?.riderNotes ?? '');
   const [photos, setPhotos] = useState<Partial<Record<PhotoType, PhotoState>>>(() =>
@@ -53,6 +54,10 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
   }
 
   function handleSubmit() {
+    if (!discipline) {
+      setFormError('Choose a discipline before analysing.');
+      return;
+    }
     if (!ridingStyle) {
       setFormError('Choose a riding style before analysing.');
       return;
@@ -63,6 +68,7 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
     }
     setFormError(null);
     onSubmit({
+      discipline,
       ridingStyle,
       riderNotes: riderNotes.trim(),
       photos: Object.entries(photos).map(([photoType, p]) => ({
@@ -82,16 +88,32 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
       </p>
 
       <section className="upload-section">
+        <h2>Discipline</h2>
+        <div className="riding-style-grid">
+          {DISCIPLINES.map((option) => (
+            <button
+              key={option}
+              type="button"
+              className={`riding-style-chip ${discipline === option ? 'riding-style-chip--active' : ''}`}
+              onClick={() => setDiscipline(option)}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="upload-section">
         <h2>Riding style</h2>
         <div className="riding-style-grid">
-          {RIDING_STYLES.map((style) => (
+          {RIDING_STYLES.map((option) => (
             <button
-              key={style}
+              key={option}
               type="button"
-              className={`riding-style-chip ${ridingStyle === style ? 'riding-style-chip--active' : ''}`}
-              onClick={() => setRidingStyle(style)}
+              className={`riding-style-chip ${ridingStyle === option ? 'riding-style-chip--active' : ''}`}
+              onClick={() => setRidingStyle(option)}
             >
-              {style}
+              {option}
             </button>
           ))}
         </div>

@@ -14,6 +14,7 @@ public class MockGeminiService(ILogger<MockGeminiService> logger) : IGeminiServi
         return new AnalyseResponse
         {
             Success = true,
+            Discipline = request.Discipline,
             RidingStyle = request.RidingStyle,
             RiderAdjustments =
             [

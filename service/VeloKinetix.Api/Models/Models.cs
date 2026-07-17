@@ -1,10 +1,18 @@
 namespace VeloKinetix.Api.Models;
 
-public static class RidingStyles
+public static class Disciplines
 {
     public static readonly string[] Allowed =
     [
         "Commuter", "Adventure/Gravel", "Cross Country", "Trail", "Enduro", "Downhill", "Road"
+    ];
+}
+
+public static class RidingStyles
+{
+    public static readonly string[] Allowed =
+    [
+        "Casual", "Enthusiast", "Competitive"
     ];
 }
 
@@ -35,6 +43,7 @@ public class PhotoUpload
 
 public class AnalyseRequest
 {
+    public string Discipline { get; set; } = "";
     public string RidingStyle { get; set; } = "";
     public string? RiderNotes { get; set; }
     public List<PhotoUpload> Photos { get; set; } = [];
@@ -58,6 +67,7 @@ public class BikeAdjustments
 public class AnalyseResponse
 {
     public bool Success { get; set; } = true;
+    public string Discipline { get; set; } = "";
     public string RidingStyle { get; set; } = "";
     public List<Adjustment> RiderAdjustments { get; set; } = [];
     public BikeAdjustments BikeAdjustments { get; set; } = new();

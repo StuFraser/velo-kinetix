@@ -107,7 +107,7 @@ public class GeminiService(
         }
 
         var model = configuration["Gemini:Model"] ?? "gemini-flash-latest";
-        var prompt = promptService.BuildPrompt(request.RidingStyle, request.RiderNotes, request.Photos);
+        var prompt = promptService.BuildPrompt(request.Discipline, request.RidingStyle, request.RiderNotes, request.Photos);
 
         var parts = new List<GeminiPart> { new() { Text = prompt } };
         parts.AddRange(request.Photos.Select(photo => new GeminiPart
@@ -175,6 +175,7 @@ public class GeminiService(
         return new AnalyseResponse
         {
             Success = true,
+            Discipline = request.Discipline,
             RidingStyle = request.RidingStyle,
             RiderAdjustments = result.RiderAdjustments,
             BikeAdjustments = result.BikeAdjustments,

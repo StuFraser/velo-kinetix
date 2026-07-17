@@ -5,17 +5,18 @@ namespace VeloKinetix.Api.Services;
 
 public interface IPromptService
 {
-    string BuildPrompt(string ridingStyle, string? riderNotes, IReadOnlyList<PhotoUpload> photos);
+    string BuildPrompt(string discipline, string ridingStyle, string? riderNotes, IReadOnlyList<PhotoUpload> photos);
 }
 
 public class PromptService : IPromptService
 {
-    public string BuildPrompt(string ridingStyle, string? riderNotes, IReadOnlyList<PhotoUpload> photos)
+    public string BuildPrompt(string discipline, string ridingStyle, string? riderNotes, IReadOnlyList<PhotoUpload> photos)
     {
         var sb = new StringBuilder();
 
         sb.AppendLine("You are an expert mountain bike fitter. Analyse the attached rider/bike photos and produce a structured fit assessment.");
         sb.AppendLine();
+        sb.AppendLine($"Discipline: {discipline}");
         sb.AppendLine($"Riding style: {ridingStyle}");
         sb.AppendLine();
 
@@ -31,6 +32,11 @@ public class PromptService : IPromptService
 
         sb.AppendLine();
         sb.AppendLine("Guidance:");
+        sb.AppendLine("- Riding style modulates expected body position within the discipline, not just the discipline alone: Casual riders typically favour " +
+                      "a more upright, comfort-oriented position; Enthusiast riders sit a middle ground (training seriously, not racing); Competitive riders " +
+                      "favour a more aggressive, aerodynamic position suited to racing intent (e.g. a Casual Cross Country rider and a Competitive Cross " +
+                      "Country rider should not be assessed against the same target position). Weigh both fields together rather than inferring posture from " +
+                      "discipline alone.");
         sb.AppendLine("- These are real-world photos: expect imperfect angles, motion blur, outdoor lighting, and background noise.");
         sb.AppendLine("  Where a photo's quality or angle limits what you can assess, say so explicitly in analysisLimitations rather than guessing.");
         sb.AppendLine("- Fewer photos means a narrower basis for judgement: if only the drive-side profile photo is provided (no front-on or bike-only shot), " +

@@ -59,7 +59,9 @@ export function ResultsScreen({ result, request, onReset }: Props) {
   return (
     <div className="results-screen">
       <h1>Your fit analysis</h1>
-      <p className="results-screen__subtitle">Riding style: {result.ridingStyle}</p>
+      <p className="results-screen__subtitle">
+        Discipline: {result.discipline} · Riding style: {result.ridingStyle}
+      </p>
 
       <section className="results-section">
         <h2>Rider adjustments</h2>
