@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import type { PHOTO_SLOTS } from '../api';
+import { PhotoZoomOverlay } from './PhotoZoomOverlay';
 
 interface Props {
   slot: (typeof PHOTO_SLOTS)[number];
@@ -10,20 +11,36 @@ interface Props {
 
 export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   return (
     <div className={`photo-slot ${previewUrl ? 'photo-slot--filled' : ''}`}>
-      <button
-        type="button"
-        className="photo-slot__dropzone"
-        onClick={() => inputRef.current?.click()}
-      >
-        {previewUrl ? (
-          <img src={previewUrl} alt={slot.label} className="photo-slot__preview" />
-        ) : (
-          <span className="photo-slot__plus">+</span>
+      <div className="photo-slot__preview-wrap">
+        <button
+          type="button"
+          className="photo-slot__dropzone"
+          onClick={() => inputRef.current?.click()}
+        >
+          {previewUrl ? (
+            <img src={previewUrl} alt={slot.label} className="photo-slot__preview" />
+          ) : (
+            <span className="photo-slot__plus">+</span>
+          )}
+        </button>
+        {previewUrl && (
+          <button
+            type="button"
+            className="photo-slot__zoom"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsZoomed(true);
+            }}
+            aria-label="View full-size photo"
+          >
+            🔍
+          </button>
         )}
-      </button>
+      </div>
       <input
         ref={inputRef}
         type="file"
@@ -47,6 +64,9 @@ export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
         <button type="button" className="photo-slot__clear" onClick={onClear}>
           Remove
         </button>
+      )}
+      {isZoomed && previewUrl && (
+        <PhotoZoomOverlay src={previewUrl} alt={slot.label} onClose={() => setIsZoomed(false)} />
       )}
     </div>
   );
