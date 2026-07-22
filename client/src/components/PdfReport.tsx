@@ -1,5 +1,6 @@
 import { Document, Page, View, Text, Image, StyleSheet, pdf } from '@react-pdf/renderer';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo-white.png';
+import watermark from '../assets/logo-watermark.png';
 import { PHOTO_SLOTS } from '../api';
 import type { AnalyseRequest, AnalyseResponse, Adjustment, Impact, PhotoType } from '../api';
 import { resizeBase64Image } from '../utils/resizeImage';
@@ -20,6 +21,12 @@ const styles = StyleSheet.create({
   logo: {
     width: 48,
     marginBottom: 10,
+  },
+  watermark: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: '65%',
   },
   title: {
     fontSize: 20,
@@ -175,6 +182,7 @@ export function ReportDocument({ discipline, ridingStyle, riderNotes, photos, re
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <Image src={watermark} style={styles.watermark} fixed />
         <Image src={logo} style={styles.logo} />
         <Text style={styles.adjustmentHead}>VeloKinentix</Text>
         <Text style={styles.title}>Fit Analysis Report</Text>
