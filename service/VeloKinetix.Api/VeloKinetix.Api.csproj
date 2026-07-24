@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    <!-- Pins the transitive Microsoft.OpenApi past CVE-2026-49451 (GHSA-v5pm-xwqc-g5wc) —
+         Microsoft.AspNetCore.OpenApi 10.0.9/10.0.10 still floor on the vulnerable 2.0.0. -->
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
   </ItemGroup>
 
 </Project>
