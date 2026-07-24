@@ -86,7 +86,7 @@ public class GeminiAnalysisResult
 
 public static class FeedbackCategories
 {
-    public static readonly string[] Allowed = ["Ideas", "Feedback", "Q&A"];
+    public static readonly string[] Allowed = ["Ideas", "Feedback"];
 }
 
 public class FeedbackRequest

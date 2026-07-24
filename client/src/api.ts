@@ -92,7 +92,7 @@ export async function analyseFit(request: AnalyseRequest): Promise<AnalyseRespon
   return response.json();
 }
 
-export const FEEDBACK_CATEGORIES = ['Ideas', 'Feedback', 'Q&A'] as const;
+export const FEEDBACK_CATEGORIES = ['Ideas', 'Feedback'] as const;
 
 export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];
 
