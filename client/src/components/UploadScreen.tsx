@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DISCIPLINES, PHOTO_SLOTS, RIDING_STYLES, fileToBase64 } from '../api';
 import type { AnalyseRequest, Discipline, PhotoType, RidingStyle } from '../api';
 import { PhotoSlot } from './PhotoSlot';
+import { convertHeicToJpeg, isHeic } from '../utils/heic';
 
 interface PhotoState {
   file: File;
@@ -35,12 +36,25 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
   const [photos, setPhotos] = useState<Partial<Record<PhotoType, PhotoState>>>(() =>
     restorePhotos(initialRequest),
   );
+  const [convertingTypes, setConvertingTypes] = useState<Partial<Record<PhotoType, boolean>>>({});
   const [formError, setFormError] = useState<string | null>(null);
 
   async function handleSelect(photoType: PhotoType, file: File) {
-    const base64 = await fileToBase64(file);
-    const previewUrl = URL.createObjectURL(file);
-    setPhotos((prev) => ({ ...prev, [photoType]: { file, previewUrl, base64 } }));
+    let workingFile = file;
+    if (isHeic(file)) {
+      setConvertingTypes((prev) => ({ ...prev, [photoType]: true }));
+      try {
+        workingFile = await convertHeicToJpeg(file);
+      } catch {
+        setFormError('Could not convert that photo — try again or use a JPEG/PNG.');
+        return;
+      } finally {
+        setConvertingTypes((prev) => ({ ...prev, [photoType]: false }));
+      }
+    }
+    const base64 = await fileToBase64(workingFile);
+    const previewUrl = URL.createObjectURL(workingFile);
+    setPhotos((prev) => ({ ...prev, [photoType]: { file: workingFile, previewUrl, base64 } }));
   }
 
   function handleClear(photoType: PhotoType) {
@@ -127,6 +141,7 @@ export function UploadScreen({ onSubmit, initialError, initialRequest }: Props) 
               key={slot.photoType}
               slot={slot}
               previewUrl={photos[slot.photoType]?.previewUrl ?? null}
+              isConverting={convertingTypes[slot.photoType] ?? false}
               onSelect={(file) => handleSelect(slot.photoType, file)}
               onClear={() => handleClear(slot.photoType)}
             />

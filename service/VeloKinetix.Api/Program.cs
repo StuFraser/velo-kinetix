@@ -23,10 +23,10 @@ builder.Services.AddScoped<IFeedbackValidationService, FeedbackValidationService
 
 // Development defaults to a mock Gemini response to avoid burning real API quota while testing.
 // Set Gemini:UseMock=false (env var: Gemini__UseMock=false) to hit the real API locally.
-var useMockGemini = builder.Environment.IsDevelopment()
-    && builder.Configuration.GetValue("Gemini:UseMock", true);
+// var useMockGemini = builder.Environment.IsDevelopment()
+//     && builder.Configuration.GetValue("Gemini:UseMock", true);
 
-// var useMockGemini = false;
+var useMockGemini = false;
 
 if (useMockGemini)
 {

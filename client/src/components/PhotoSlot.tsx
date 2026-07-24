@@ -5,11 +5,12 @@ import { PhotoZoomOverlay } from './PhotoZoomOverlay';
 interface Props {
   slot: (typeof PHOTO_SLOTS)[number];
   previewUrl: string | null;
+  isConverting?: boolean;
   onSelect: (file: File) => void;
   onClear: () => void;
 }
 
-export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
+export function PhotoSlot({ slot, previewUrl, isConverting, onSelect, onClear }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -19,9 +20,12 @@ export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
         <button
           type="button"
           className="photo-slot__dropzone"
+          disabled={isConverting}
           onClick={() => inputRef.current?.click()}
         >
-          {previewUrl ? (
+          {isConverting ? (
+            <span className="photo-slot__plus">Converting…</span>
+          ) : previewUrl ? (
             <img src={previewUrl} alt={slot.label} className="photo-slot__preview" />
           ) : (
             <span className="photo-slot__plus">+</span>
@@ -44,7 +48,7 @@ export function PhotoSlot({ slot, previewUrl, onSelect, onClear }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp"
+        accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
         capture="environment"
         className="photo-slot__input"
         onChange={(e) => {
