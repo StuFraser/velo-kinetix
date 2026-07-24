@@ -18,9 +18,24 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     color: '#1a1f20',
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 10,
+  },
   logo: {
     width: 48,
-    marginBottom: 10,
+  },
+  wordmark: {
+    fontSize: 20,
+    fontFamily: 'Helvetica-Bold',
+  },
+  wordmarkVelo: {
+    color: '#ff8f1a',
+  },
+  wordmarkKinetix: {
+    color: '#9bef2e',
   },
   watermark: {
     position: 'absolute',
@@ -183,8 +198,13 @@ export function ReportDocument({ discipline, ridingStyle, riderNotes, photos, re
     <Document>
       <Page size="A4" style={styles.page}>
         <Image src={watermark} style={styles.watermark} fixed />
-        <Image src={logo} style={styles.logo} />
-        <Text style={styles.adjustmentHead}>VeloKinentix</Text>
+        <View style={styles.headerRow}>
+          <Image src={logo} style={styles.logo} />
+          <Text style={styles.wordmark}>
+            <Text style={styles.wordmarkVelo}>Velo</Text>
+            <Text style={styles.wordmarkKinetix}>Kinetix</Text>
+          </Text>
+        </View>
         <Text style={styles.title}>Fit Analysis Report</Text>
         <Text style={styles.subtitle}>
           Discipline: {discipline} · Riding style: {ridingStyle} · Generated {generatedDate}

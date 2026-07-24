@@ -99,6 +99,9 @@ Request body:
 `Downhill`, `Road`. `ridingStyle` is one of: `Casual`, `Enthusiast`, `Competitive`.
 `photoType` is one of: `profile_drive`, `front_on`, `bike_static`.
 `profile_drive` is required; `front_on` and `bike_static` are recommended but optional.
+`mimeType` must be `image/jpeg`, `image/png`, or `image/webp` — the API never accepts HEIC/HEIF.
+iPhone photos (HEIC by default) are converted to JPEG client-side before upload, via `heic-to`
+(see `client/src/utils/heic.ts`).
 
 Success response:
 
